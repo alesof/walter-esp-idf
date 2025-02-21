@@ -5347,6 +5347,17 @@ bool WalterModem::getClock(WalterModemRsp *rsp, walterModemCb cb, void *args)
     _returnAfterReply();
 }
 
+bool WalterModem::setClock(const char *date, WalterModemRsp *rsp, walterModemCb cb, void *args)
+{
+    _runCmd(arr("AT+CCLK=", date), "OK", rsp, cb, args);
+    _returnAfterReply();
+}
+
+bool WalterModem::setApproxPos(const char *lat, const char *lon, const char* alt, WalterModemRsp *rsp, walterModemCb cb, void *args){
+    _runCmd(arr("AT+LPGNSSAPPROXPOS=",_atStr(lat), ",", _atStr(lon), ",", _atStr(alt)), "OK", rsp, cb, args);
+    _returnAfterReply();
+}
+
 bool WalterModem::socketSend(
     char *str,
     WalterModemRsp *rsp,
@@ -5358,7 +5369,6 @@ bool WalterModem::socketSend(
     return socketSend((uint8_t*) str, strlen(str), rsp, cb, args, rai, 
         socketId);
 }
-
 
 bool WalterModem::configGNSS(
     WalterModemGNSSSensMode sensMode,
@@ -5414,6 +5424,8 @@ bool WalterModem::performGNSSAction(
         }
         return "";
     };
+    
+    ESP_LOGE("WALTER MODEM", "Performing GNSS action: %s", gnssActionStr(action));
 
     _runCmd(arr(
         "AT+LPGNSSFIXPROG=\"",

@@ -4439,6 +4439,35 @@ class WalterModem
             walterModemCb cb = NULL,
             void *args = NULL);
 
+
+        /**
+         * @brief Set the modem time and date.
+         * 
+         * This function will set the time and date of the modem.
+         * 
+         * @param dateTime The date and time to set in the format
+         * "yy/MM/dd,hh:mm:ss+zz" where yy is the year, MM the month, dd the
+         * day, hh the hour, mm the minute, ss the second and zz the timezone.
+         * @param rsp Pointer to a modem response structure to save the result
+         * of the command in. When NULL is given the result is ignored.
+         * @param cb Optional callback argument, when not NULL this function
+         * will return immediately.
+         * @param args Optional argument to pass to the callback.
+         */
+        static bool setClock(
+            const char *date = "\"24/02/20,22:48:00+04\"",
+            WalterModemRsp *rsp = NULL,
+            walterModemCb cb = NULL,
+            void *args = NULL);
+
+        static bool setApproxPos(
+            const char *lat = "40.841363",
+            const char *lon = "14.292580",
+            const char* alt = "25",
+            WalterModemRsp *rsp = NULL,
+            walterModemCb cb = NULL,
+            void *args = NULL);
+
         /**
          * @brief Configure Walter's GNSS receiver.
          * 
